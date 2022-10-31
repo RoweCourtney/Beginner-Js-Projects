@@ -1,0 +1,193 @@
+/* __________________________________________________ General (shared) */
+body {
+   text-align: center;
+}
+
+header {
+   font-size: 5rem;
+   margin: 2rem 2rem 0.5rem 2rem;
+}
+
+h2 {
+   color: rgb(43, 43, 43);
+   margin: 0.5rem 2rem 3rem 2rem;
+}
+
+div {
+   margin-bottom: 2rem;
+}
+
+section {
+   max-width: 40rem;
+   margin: 0 auto;
+}
+
+.header {
+   background-color: rgb(11, 114, 117);
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+   padding: 0.3rem 0.188rem ;
+}
+
+/* __________________________________________________ stopwatch */
+
+.timer {
+   border-style: solid;
+   border-color: rgb(11, 114, 117);
+}
+
+#time-watch {
+   font-size: 2rem;
+}
+
+.controls {
+   background-color: rgb(11, 114, 117);
+   padding: 1.5rem 0.188rem;
+   border-bottom-left-radius: 5px;
+   border-bottom-right-radius: 5px;
+}
+
+.btn {
+   color: white;
+}
+
+.startBtn {
+   background-color: rgb(5, 146, 5);
+}
+
+.startBtn:hover {
+   background-color: rgb(8, 187, 8);
+}
+
+.stopBtn {
+   background-color: rgb(156, 7, 7);
+}
+
+.stopBtn:hover {
+   background-color: rgb(224, 5, 5);
+}
+
+.resetBtn {
+   background-color: rgb(18, 105, 131);
+}
+
+.resetBtn:hover {
+   background-color: rgb(25, 133, 167);
+}
+
+/* __________________________________________________ Clock */
+
+.clockFace {
+   background-color: rgb(32, 32, 32);
+   border-color: rgb(32, 32, 32);
+   border-bottom-left-radius: 5px;
+   border-bottom-right-radius: 5px;
+   padding: 2.5rem 0.188rem;
+}
+
+#time-clock {
+   color: rgb(11, 114, 117);
+   margin: 0 auto;
+   padding: 1rem;
+   font-size: 3rem;
+}
+
+/* __________________________________________________ Calculator */
+
+.cal-grid {
+   background-color: rgb(32, 32, 32);
+   border: solid;
+   border-color :rgb(32, 32, 32);
+   border-bottom-left-radius: 5px;
+   border-bottom-right-radius: 5px;
+}
+
+#grid-btns {
+   list-style: none;
+   display: grid;
+   grid-template-columns: repeat(4, 4rem);
+   grid-template-rows: repeat(6, 4rem);
+   justify-content: center;
+   gap: 0.5rem;
+
+   border: solid;
+   border-color: rgb(88, 88, 88);
+   width: fit-content;
+   margin: 1rem auto;
+   padding: 0;
+   padding: 1rem;
+}
+
+#grid-btns li:nth-of-type(1) {
+   grid-column: 1/span 4;
+   background-color: aliceblue;
+}
+
+#grid-btns li:nth-of-type(1):hover {
+   background-color: aliceblue;
+}
+
+
+#grid-btns li:nth-of-type(2) {
+   background-color: rgb(6, 177, 168);
+}
+
+#grid-btns li:nth-of-type(2):hover {
+   background-color: rgb(4, 134, 128);
+}
+
+#grid-btns li:nth-of-type(3) {
+   background-color: rgb(6, 177, 168);
+}
+
+#grid-btns li:nth-of-type(3):hover {
+   background-color: rgb(4, 134, 128);
+}
+
+#grid-btns li:nth-of-type(4) {
+   background-color: rgb(6, 177, 168);
+}
+
+#grid-btns li:nth-of-type(4):hover {
+   background-color: rgb(4, 134, 128);
+}
+
+#grid-btns li:nth-of-type(5) {
+   background-color: rgb(6, 177, 168);
+}
+
+#grid-btns li:nth-of-type(5):hover {
+   background-color: rgb(4, 134, 128);
+}
+
+#grid-btns li:nth-of-type(9) {
+   grid-column: 4;
+   grid-row: 3/span 4;
+   background-color: rgb(6, 177, 106);
+}
+
+#grid-btns li:nth-of-type(9):hover {
+   background-color: rgb(5, 131, 78);
+}
+
+#grid-btns li:nth-of-type(18) {
+   background-color: rgb(6, 177, 168);
+}
+
+#grid-btns li:nth-of-type(18):hover {
+   background-color: rgb(4, 134, 128);
+}
+
+#grid-btns li {
+   background-color: rgb(175, 174, 174);
+   border-radius: 2px;
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 1.5rem;
+}
+
+#grid-btns li:hover {
+   background-color: rgb(122, 122, 122);
+}

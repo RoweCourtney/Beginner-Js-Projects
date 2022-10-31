@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Beginner JS Projects 2</title>
+
+   <link rel="stylesheet" href="styles.css">
+   <script src="app.js" defer></script>
+
+</head>
+<body>
+   <header>Beginner Javascript</header>
+   <h1>Guess The Color | Hangman | Pairs Game | Simon</h1>
+
+<!-- ______________________________ Guess The Color Game ______________________________ -->
+
+<div id="container">
+   <section id="rgbColorCode" class="header">
+      <h2 id="whatColor">RGB(?, ?, ?)</h2>
+      <h3>Select The Matching Color Below</h3>
+   </section>
+
+   <section id="controls">
+      <div class="tabs">
+         <button id="newColors" class="changeColors">New Colors</button>
+      </div>
+     
+      <div class="tabs">
+         <p id="status"></p>
+      </div>
+
+      <div class="tabs">
+         <button id="novice" class="level level-active">Novice</button>
+         <button id="intermediate" class="level level-disabled">Intermediate</button>
+         <button id="expert" class="level level-disabled">Expert</button>
+      </div>
+      
+   </section>
+
+   <section id="rgbColorOptions">
+
+      <div class="colorSquare"></div>
+      <div class="colorSquare"></div>
+      <div class="colorSquare"></div>
+
+      <div class="colorSquare"></div>
+      <div class="colorSquare"></div>
+      <div class="colorSquare"></div>
+
+      <div class="colorSquare"></div>
+      <div class="colorSquare"></div>
+      <div class="colorSquare"></div>
+      
+   </section>
+</div>
+
+<!-- ______________________________ Hangman ______________________________ -->
+
+<div class="container">
+   <section id="" class="header">
+      <h2>Hangman</h2>
+      <h3>Guess the word using the letters provided<br>or request a hint while you have them.</h3>
+   </section>
+
+   <section id="gameContent" class="">
+      <div id="alphabet">
+         <div class="letters">A</div>
+         <div class="letters">B</div>
+         <div class="letters">C</div>
+         <div class="letters">D</div>
+
+         <div class="letters">E</div>
+         <div class="letters">F</div>
+         <div class="letters">G</div>
+         <div class="letters">H</div>
+
+         <div class="letters">I</div>
+         <div class="letters">J</div>
+         <div class="letters">K</div>
+         <div class="letters">L</div>
+
+         <div class="letters">M</div>
+         <div class="letters">N</div>
+         <div class="letters">O</div>
+         <div class="letters">P</div>
+
+         <div class="letters">Q</div>
+         <div class="letters">R</div>
+         <div class="letters">S</div>
+         <div class="letters">T</div>
+
+         <div class="letters">U</div>
+         <div class="letters">V</div>
+         <div class="letters">W</div>
+         <div class="letters">X</div>
+
+         <div class="letters">Y</div>
+         <div class="letters">Z</div>
+      </div>
+
+      <div id="gameArea">
+         <div id="hangedMan">
+            <p id="gameOver-msg"></p>
+            <canvas id="hangedMan-container" width="250" height="140"></canvas>
+         </div>
+
+         <div id="gameWord">
+            <p class="sectionTitle">Category: Halloween</p>
+            <p id="word"></p>
+         </div>
+   
+         <div id="strikes">
+            <p class="sectionTitle">Strikes</p>
+            <div class="strike">1</div>
+            <div class="strike">2</div>
+            <div class="strike">3</div>
+            <div class="strike">4</div>
+            <div class="strike">5</div>
+
+            <div class="strike">6</div>
+            <div class="strike">7</div>
+            <div class="strike">8</div>
+            <div class="strike">9</div>
+            <div class="strike">10</div>
+         </div>
+   
+         <div id="hints">
+            <p class="sectionTitle">Hints</p>
+            <div class="hint">1</div>
+            <div class="hint">2</div>
+            <div class="hint">3</div>
+            <p class="requestHint-btn">Request</p>
+         </div>
+   
+      </div>
+   </section>
+
+   <section id="playAgain">
+      <button id="playAgain-btn">Play Again</button>
+   </section>
+
+</div>
+
+<!-- ______________________________ Pairs Game ______________________________ -->
+
+<section class="header">
+
+</section>
+
+</body>
+</html>
