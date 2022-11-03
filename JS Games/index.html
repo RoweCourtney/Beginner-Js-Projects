@@ -16,7 +16,7 @@
 
 <!-- ______________________________ Guess The Color Game ______________________________ -->
 
-<div id="container">
+<div class="container">
    <section id="rgbColorCode" class="header">
       <h2 id="whatColor">RGB(?, ?, ?)</h2>
       <h3>Select The Matching Color Below</h3>
@@ -145,9 +145,60 @@
 
 <!-- ______________________________ Pairs Game ______________________________ -->
 
-<section class="header">
+<div class="container">
+   <section class="header">
+      <h2>Pairs Game</h2>
+      <h3>Find all the matching pairs to win. <br><span>- Click Any Card To Start -</span></h3>
+   </section>
+   
+   <section id="pairsControls">
+      <div class="pairs-tabs">
+         <button id="newPairs" class="updatePairs">New Cards</button>
+      </div>
+     
+      <div class="pairs-tabs">
+         <p id="timer"><span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tenths">00</span></p>
+      </div>
 
-</section>
+      <div class="pairs-tabs">
+         <button id="easy" class="mode mode-active">8 Cards</button>
+         <button id="medium" class="mode mode-disabled">12 Cards</button>
+         <button id="hard" class="mode mode-disabled">16 Cards</button>
+      </div>
+
+   
+   </section>
+
+   <section id="cardArea">
+      <p id="bestTime"></p>
+
+      <div id="newCardLayout">
+         
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+   
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+   
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+   
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+         <div class="card back"></div>
+      </div>
+     
+      
+   </section>
+</div>
+
 
 </body>
 </html>

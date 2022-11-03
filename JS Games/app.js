@@ -13,30 +13,23 @@ let gridSize = document.getElementById("rgbColorOptions").style;
 let maxSquares;  
 update_maxSquares(difficulty);     
 
-         // let colorClickedText = "";
-         // let colorClickedStyle = "";
-
 let rgbTitle = document.getElementById("whatColor");
 let titleContainer = document.getElementById("rgbColorCode");
 let randomColorFill = document.querySelectorAll(".colorSquare");
 let newRandomColors = document.getElementById("newColors");
 
 let difficultyTabs = document.querySelectorAll(".level");
-         // let noviceTab = document.getElementById("novice");
-         // let intermediateTab = document.getElementById("intermediate");
-         // let expertTab = document.getElementById("expert");
+let grid = document.querySelectorAll(".colorSquare");
 
 // __________________________________________________ Event Listeners
-let grid = document.querySelectorAll(".colorSquare");
+
 
 
 newRandomColors.addEventListener("click", () => { gameSetup(difficulty); });
 difficultyTabs[novice].addEventListener("click", () => { gameSetup(novice); });
 difficultyTabs[interm].addEventListener("click", () => { gameSetup(interm); });
 difficultyTabs[expert].addEventListener("click", () => { gameSetup(expert); });
-         // noviceTab.addEventListener("click", noviceMode);
-         // intermediateTab.addEventListener("click", intermediateMode);
-         // expertTab.addEventListener("click", expertMode);
+
 
 for (var i = 0; i < randomColorFill.length; i++) {
    randomColorFill[i].addEventListener("click", ((event) => { selectedColor(event) }));
@@ -181,7 +174,7 @@ function update_maxSquares(diff) {
          //    };
          // };
 
-         function add_removeGridClass() {
+function add_removeGridClass() {
    for(var i = 0; i < grid.length; i++) {
       grid[i].classList.remove("colorSquare");
    };
@@ -213,7 +206,7 @@ let displayedWord = "";
 let guessThisWord = "";
 let hangmanGameOver = false;
 
-let words = ["Ghost", "Pumpkin", "Spooky"];
+let words = ["Ghosts", "Pumpkins", "Spooky", "Zombies", "Candy", "Graveyards" ];
 let drawArray = [platform, post, beam, noose, head, torso, rightArm, leftArm, rightLeg, leftLeg];
 
 
@@ -251,7 +244,6 @@ function newRandomWord() {
    };
    populateDisplayWord();
    initCanvas();
-   console.log(guessThisWord);
 };
 
 function populateDisplayWord() {
@@ -313,7 +305,6 @@ function provideHint() {
       };
       newHint = randomLetter();
    };
-   console.log(newHint);
 };
 
 function randomLetter() {
@@ -427,12 +418,311 @@ function noose() {
    draw(130, 20, 130, 30);
 };
 
- // __________________________________________________ Pairs Game __________
+// __________________________________________________ Pairs Game __________
 // __________________________________________________ Variables
+const eight = 0;
+const twelve = 1;
+const sixteen = 2;
 
+let randomColorPairs = [];
+let defaultCardLayout = eight;
+
+let cards = document.querySelectorAll(".card");
+let layoutTabs = document.querySelectorAll(".mode");
+let cardGrid = document.getElementById("newCardLayout").style;
+let newPairs = document.getElementById("newPairs");
+let time = document.getElementById("timer");
+let bestTime = document.getElementById("bestTime");
+let newBestTime = "99:99:99";
+
+let maxCards;
+let maxPairs;
+update_maxCards(defaultCardLayout); 
+
+let randomPairs = [];
+
+// __________________________________________________
+
+let minutes = 00;
+let seconds = 00;
+let tenths = 00;
+
+let appendMinutes = document.getElementById("minutes");
+let appendSeconds = document.getElementById("seconds");
+let appendTenths = document.getElementById("tenths");
+
+let Interval;
 
 // __________________________________________________ Event Listeners
 
+layoutTabs[eight].addEventListener("click", () => { Setup(eight) });
+layoutTabs[twelve].addEventListener("click", () => { Setup(twelve) });
+layoutTabs[sixteen].addEventListener("click", () => { Setup(sixteen) });
 
+newPairs.addEventListener("click", newRandomLayout);
+
+// for (var i = 0; i < cards.length; i++) {
+//    cards[i].addEventListener("click", (event) => { flipCard(event) });
+// }
+
+cards.forEach((card) => {
+   card.addEventListener("click", flipClickedCard);
+ });
 
 // __________________________________________________ Functions
+Setup(defaultCardLayout);
+
+function Setup(qty) {
+   for (var i = 0; i < layoutTabs.length; i++) {
+      layoutTabs[i].classList.remove("mode-active");
+      layoutTabs[i].classList.add((i == qty) ? "mode-active"
+                                             : "mode-disabled");
+   };
+   stripBackgroundColors();
+   defaultCardLayout = qty;
+   update_maxCards(qty);
+   add_removePairsGridClass();
+   resetPairs();
+   resetBestTime();
+   newRandomLayout();
+};
+
+function resetBestTime() {
+   newBestTime = "99:99:99";
+   bestTime.innerHTML = "";
+}
+
+function stripBackgroundColors() {
+   Array.from(cards).forEach((c) => { c.style.backgroundColor = ''; });
+}
+
+function matchesFound() {
+   stopTimer();
+   let finishingTime = appendMinutes.innerHTML + ":" + 
+                       appendSeconds.innerHTML + ":" + 
+                       appendTenths.innerHTML;
+   if (finishingTime < newBestTime) {
+      newBestTime = appendMinutes.innerHTML + ":" + appendSeconds.innerHTML + ":" + appendTenths.innerHTML;
+      bestTime.innerHTML = "Best Time: " + newBestTime;
+   }
+};
+
+// function matchesFound() {
+//    stopTimer();
+//    newBestTime = appendMinutes.innerHTML + ":" + appendSeconds.innerHTML + ":" + appendTenths.innerHTML;
+//    bestTime.innerHTML = "Best Time: " + newBestTime;
+// };
+
+function randomColorValue() {
+   let r = Math.floor(Math.random()*256);
+   let g = Math.floor(Math.random()*256);
+   let b = Math.floor(Math.random()*256);
+
+   let colorValue = "rgb(" + r + ", " + g + ", "  + b + ")";
+   return colorValue;
+};
+
+function assignColors() {
+   for (var i = 0; i < maxPairs; i++) {
+      randomColorPairs[i] = randomColorValue();
+
+      let firstCardInPair = randomPairs[i][0];
+      let secondCardInPair = randomPairs[i][1];
+      cards[firstCardInPair].style.backgroundColor = randomColorPairs[i];
+      cards[secondCardInPair].style.backgroundColor = randomColorPairs[i];
+    };
+};
+
+function shuffle(array) {
+   let currentIndex = array.length,  randomIndex;
+
+   while (currentIndex != 0) {
+     randomIndex = Math.floor(Math.random() * currentIndex);
+     currentIndex--;
+ 
+     [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+   };
+   return array;
+};
+
+function newRandomLayout() {
+   resetTimer();
+
+   let createPairs_Array = [];
+   for ( var i = 0; i < maxCards; i++) {
+      createPairs_Array.push(i);
+   };
+
+   shuffle(createPairs_Array);
+
+   randomPairs = [];
+   while (createPairs_Array.length > 0) {
+      randomPairs.push([createPairs_Array.pop(), createPairs_Array.pop()]);
+   };
+   
+   resetPairs();
+   assignColors();
+};
+
+// function declareWin() {
+//    for (var i = 0; i < maxCards; i++) {
+//       if(cards[i].classList.contains("flip")) {
+//          matchesFound();
+//       };
+//    };
+// };
+
+// function declareWin() {
+//    let verifyMatches = cards.every((card) => {card.classList.contains("flip")});
+//    if(verifyMatches) {
+//       matchesFound();
+//    };
+//    console.log(verifyMatches);
+// };
+
+function declareWin() {
+   // let verifyMatches = every(function(card){card.classList.contains("flip")});
+   var verifyMatches = true;
+   for (var i = 0; i < maxCards; i++) {
+      if (!cards[i].classList.contains("flip")) { verifyMatches = false; }
+   }
+
+   if(verifyMatches) {
+      matchesFound();
+   };
+};
+
+let previouslyClickedCard;
+let noFlippingAllowed = false;
+
+function flipClickedCard(event) {
+   if (noFlippingAllowed) { return; }
+   runTimer();
+   
+   let clickedCard = event.target;
+   clickedCard.classList.remove("back");
+
+   if (clickedCard.classList.contains("flip")) { 
+      return;
+   };
+
+  if (!previouslyClickedCard) { previouslyClickedCard = clickedCard; }
+   else {
+      if (previouslyClickedCard.style.backgroundColor == 
+         clickedCard.style.backgroundColor) {
+            clickedCard.classList.add("flip");
+            previouslyClickedCard.classList.add("flip");
+            previouslyClickedCard = undefined;
+            declareWin();
+      }
+      else {
+         noFlippingAllowed = true;
+         setTimeout(() => { 
+            clickedCard.classList.add("back"); 
+            previouslyClickedCard.classList.add("back");
+            previouslyClickedCard = undefined;
+            noFlippingAllowed = false;
+         }, 800);       
+      }
+   }
+   
+}
+
+function update_maxCards(qty) {
+   if(qty == eight) { 
+      maxCards = 8;
+      cardGrid.gridTemplateRows = "repeat(2, 12rem)";
+   } else if(qty == twelve) {
+      maxCards = 12;
+      cardGrid.gridTemplateRows = "repeat(3, 12rem)";
+   } else {
+      maxCards = 16;
+      cardGrid.gridTemplateRows = "repeat(4, 12rem)";
+   };
+   maxPairs = (maxCards/2);
+};
+
+function add_removePairsGridClass() {
+   for(var i = 0; i < cards.length; i++) {
+      cards[i].classList.remove("card");
+   };
+
+   for( var i = 0; i < maxCards; i++) {
+      cards[i].classList.add("card");
+   };
+}; 
+
+function resetPairs() {
+   cards.forEach((card) => {
+      card.classList.remove("flip");
+      card.classList.add("back");
+    });
+};
+
+function runTimer() {
+   clearInterval(Interval);
+   Interval = setInterval(startTimer, 10);
+};
+
+function stopTimer() {
+   clearInterval(Interval);
+};
+
+function resetTimer() {
+   clearInterval(Interval);
+    tenths = "00";
+    seconds = "00";
+    minutes = "00";
+ 
+    appendTenths.innerHTML = tenths;
+    appendSeconds.innerHTML = seconds;
+    appendMinutes.innerHTML = minutes;
+};
+
+ // __________________________________________________ Stopwatch (pairs game)
+ 
+ function startTimer() {
+    tenths++;
+ 
+    if(tenths <= 9) {
+       appendTenths.innerHTML = "0" + tenths;
+    };
+ 
+    if(tenths > 9) {
+       appendTenths.innerHTML = tenths;
+    };
+ 
+    if(tenths > 99) {
+       seconds++;
+       appendSeconds.innerHTML = "0" + seconds;
+
+       tenths = 0;
+       appendTenths.innerHTML = "0" + 0;
+    };
+ 
+ 
+ 
+    if(seconds <= 9 && seconds > 0) { // seconds > 0 to prevent "000" from showing
+       appendSeconds.innerHTML = "0" + seconds;
+    };
+ 
+    if(seconds > 9) {
+       appendSeconds.innerHTML = seconds;
+    };
+ 
+    if(seconds > 59) {
+       minutes++;
+       appendMinutes.innerHTML = "0" + minutes;
+
+       seconds = 0;
+       appendSeconds.innerHTML = "0" + 0;
+    };
+ 
+ 
+ 
+    if(minutes >9) {
+       appendMinutes.innerHTML = minutes;
+    };
+ 
+ };
+ 
