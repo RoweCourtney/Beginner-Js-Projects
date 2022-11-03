@@ -348,12 +348,7 @@ p {
    background-size: contain;
 }
 
-.front {
-   /* background-color: red; */
-   /* transform: rotateY(180deg); */
-}
-
 .flip {
-   /* transform:rotateY(180deg); */
+   border: transparent;
 }
 

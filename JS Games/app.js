@@ -507,12 +507,6 @@ function matchesFound() {
    }
 };
 
-// function matchesFound() {
-//    stopTimer();
-//    newBestTime = appendMinutes.innerHTML + ":" + appendSeconds.innerHTML + ":" + appendTenths.innerHTML;
-//    bestTime.innerHTML = "Best Time: " + newBestTime;
-// };
-
 function randomColorValue() {
    let r = Math.floor(Math.random()*256);
    let g = Math.floor(Math.random()*256);
@@ -564,25 +558,8 @@ function newRandomLayout() {
    assignColors();
 };
 
-// function declareWin() {
-//    for (var i = 0; i < maxCards; i++) {
-//       if(cards[i].classList.contains("flip")) {
-//          matchesFound();
-//       };
-//    };
-// };
-
-// function declareWin() {
-//    let verifyMatches = cards.every((card) => {card.classList.contains("flip")});
-//    if(verifyMatches) {
-//       matchesFound();
-//    };
-//    console.log(verifyMatches);
-// };
-
 function declareWin() {
-   // let verifyMatches = every(function(card){card.classList.contains("flip")});
-   var verifyMatches = true;
+   let verifyMatches = true;
    for (var i = 0; i < maxCards; i++) {
       if (!cards[i].classList.contains("flip")) { verifyMatches = false; }
    }
@@ -622,10 +599,9 @@ function flipClickedCard(event) {
             previouslyClickedCard.classList.add("back");
             previouslyClickedCard = undefined;
             noFlippingAllowed = false;
-         }, 800);       
-      }
-   }
-   
+         }, 600);       
+      };
+   };
 }
 
 function update_maxCards(qty) {
