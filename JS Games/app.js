@@ -693,12 +693,198 @@ function resetTimer() {
        seconds = 0;
        appendSeconds.innerHTML = "0" + 0;
     };
- 
- 
+
+
  
     if(minutes >9) {
        appendMinutes.innerHTML = minutes;
     };
- 
  };
  
+
+ // __________________________________________________ Simon __________
+// __________________________________________________ Variables
+let normal = 0;
+let advanced = 1;
+
+let gameDefault = normal;
+let gameMode = document.querySelectorAll(".gameMode");
+
+let startGame = document.getElementById("start-btn");
+let game_btns = document.querySelectorAll(".game-btn");
+
+let randomPattern = [];
+let currentIndex = 0;
+let red = document.getElementById("red");
+let blue = document.getElementById("blue");
+let green = document.getElementById("green");
+let yellow = document.getElementById("yellow");
+
+let gameScore = document.getElementById("gameScore");
+let bestScore = document.getElementById("bestScore");
+let trackGameScore = 0;
+let trackBestScore = 0;
+
+let sequencePlaying = false;
+let simonGameOver = false;
+
+// __________________________________________________ Event Listeners
+
+gameMode[normal].addEventListener("click", () => { ChangeDifficulty(normal) });
+gameMode[advanced].addEventListener("click", () => { ChangeDifficulty(advanced) });
+
+
+startGame.addEventListener("click", () => { StartGame(gameDefault); });
+
+game_btns.forEach((game_btn) => {
+   game_btn.addEventListener("click", playerResponse);
+});
+
+
+// __________________________________________________ Functions
+
+function ChangeDifficulty(difficulty) {
+   if (difficulty != gameDefault) {
+      trackBestScore = 0;
+      bestScore.innerHTML = "Best Score: 0";
+      startGame.innerHTML = "Start";
+   }
+
+   StartGame(difficulty);
+}
+
+function StartGame(difficulty) {
+   simonGameOver = false;
+   currentIndex = 0;
+   trackGameScore = 0;
+   gameScore.innerHTML = "Current Score: 0";
+   simonSetup(difficulty);
+   patternCreation();
+};
+
+function simonSetup(mode) {
+   for (var i = 0; i < gameMode.length; i++) {
+      gameMode[i].classList.remove("activeGame");
+      gameMode[i].classList.add((i == mode) ? "activeGame"
+                                             : "disabledGame");
+   };
+
+   gameDefault = mode;
+   randomPattern = [];
+};
+
+function patternCreation() {
+   let random_btn = game_btns[Math.floor(Math.random(game_btns)*game_btns.length)];
+
+   randomPattern.push(random_btn);
+
+   sequencePlaying = true;
+   for (var i = 0; i < randomPattern.length; i++) {
+      toggleDelay(i, i === randomPattern.length - 1);
+   };
+};
+
+function toggleDelay(i, endOfSequence) {
+   setTimeout(() => {
+     if (!simonGameOver) { 
+       toggle_Sound_Color(i);
+     }
+     if (endOfSequence) { 
+      sequencePlaying = false;
+     }
+   }, 700 * i);
+};
+
+function playerResponse(event) {
+   if (sequencePlaying || simonGameOver) { return; }
+   let response = event.target;
+   
+   if(response == randomPattern[currentIndex]) {
+      if (currentIndex == randomPattern.length -1) {
+         toggle_Sound_Color(currentIndex);
+         setTimeout(patternCreation, 1000);
+         currentIndex = 0; 
+         trackGameScore++;
+         score(); 
+      } else {
+         toggle_Sound_Color(currentIndex);
+         currentIndex++
+      };
+   } else {
+      setGameOver();
+   };
+};
+
+function playSound(soundName) {
+   var audio = new Audio("sounds/" + soundName + ".mp3");
+   audio.play();
+ };
+
+function toggle_Sound_Color(colorIndex) {
+   function toggle() {
+      randomPattern[colorIndex].classList.remove("red-active")
+      randomPattern[colorIndex].classList.remove("blue-active")
+      randomPattern[colorIndex].classList.remove("green-active")
+      randomPattern[colorIndex].classList.remove("yellow-active")
+   };
+
+   if(randomPattern[colorIndex] == red) {
+      if(gameDefault == normal) {
+         randomPattern[colorIndex].classList.add("red-active");
+         playSound("red");
+         setTimeout(toggle, 300);
+      } else {
+         playSound("red");
+      };
+   };
+
+   if(randomPattern[colorIndex] == blue) {
+      if(gameDefault == normal) {
+         randomPattern[colorIndex].classList.add("blue-active");
+         playSound("blue");
+         setTimeout(toggle, 300);
+      } else {
+         playSound("blue");
+      };
+   };
+
+   if(randomPattern[colorIndex] == green) {
+      if(gameDefault == normal) {
+         randomPattern[colorIndex].classList.add("green-active");
+         playSound("green");
+         setTimeout(toggle, 300);
+      } else {
+         playSound("green");
+      };
+   };
+
+   if(randomPattern[colorIndex] == yellow) {
+      if(gameDefault == normal) {
+         randomPattern[colorIndex].classList.add("yellow-active");
+         playSound("yellow");
+         setTimeout(toggle, 300);
+      } else {
+         playSound("yellow");
+      };
+   };
+};
+
+
+function score() {
+   gameScore.innerHTML = "Current Score: " + trackGameScore;
+};
+
+
+function topScore() {
+   if(trackGameScore > trackBestScore) {
+      trackBestScore = trackGameScore;
+      bestScore.innerHTML = "Best Score: " + trackGameScore;
+   };
+};
+
+function setGameOver() {
+   simonGameOver = true;
+   startGame.innerHTML = "Play Again";
+   topScore();
+   playSound("Buzzer");
+};
